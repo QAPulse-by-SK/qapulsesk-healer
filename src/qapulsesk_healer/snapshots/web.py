@@ -1,4 +1,5 @@
 """Web HTML snapshot — minifies a page so the LLM sees signal, not noise."""
+
 from __future__ import annotations
 
 from bs4 import BeautifulSoup, Comment

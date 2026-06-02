@@ -3,6 +3,7 @@
 Wraps a Selenium WebDriver so the Healer can capture a page snapshot and
 resolve locators in Selenium's native vocabulary.
 """
+
 from __future__ import annotations
 
 from typing import TYPE_CHECKING

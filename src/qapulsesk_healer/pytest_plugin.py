@@ -3,6 +3,7 @@
 Adds a `--qapulsesk-heal` CLI flag and a `healer` fixture that tests can use to
 get a configured Healer for their adapter.
 """
+
 from __future__ import annotations
 
 from typing import TYPE_CHECKING

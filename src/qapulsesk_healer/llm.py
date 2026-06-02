@@ -4,6 +4,7 @@ v0.1.0 ships an Anthropic Claude implementation. The `LLMProvider` Protocol
 lets future versions slot in OpenAI, Gemini, or local models without touching
 the rest of the codebase.
 """
+
 from __future__ import annotations
 
 import json

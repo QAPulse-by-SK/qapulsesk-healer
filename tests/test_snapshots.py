@@ -1,4 +1,5 @@
 """Tests for snapshot minification."""
+
 from __future__ import annotations
 
 from qapulsesk_healer.snapshots.mobile import MobileSnapshot

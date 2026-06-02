@@ -8,6 +8,7 @@ Run:
     export ANTHROPIC_API_KEY="sk-ant-..."
     python examples/selenium_demo.py
 """
+
 from __future__ import annotations
 
 import logging

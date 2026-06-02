@@ -4,6 +4,7 @@ Cypress runs in-browser, so integration goes through a `cy.task` JS bridge
 rather than a direct Python binding. Skeleton placed here so the import path
 is stable from v0.1.0 onward.
 """
+
 from __future__ import annotations
 
 from typing import Any

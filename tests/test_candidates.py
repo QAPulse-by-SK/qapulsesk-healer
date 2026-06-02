@@ -1,4 +1,5 @@
 """Tests for the Candidate and HealResult models."""
+
 from __future__ import annotations
 
 import pytest

@@ -4,6 +4,7 @@ A snapshot is whatever representation we hand to the LLM so it can propose
 new locators. Web snapshots are minified HTML; mobile snapshots are minified
 XML from Appium's `driver.page_source`.
 """
+
 from __future__ import annotations
 
 from abc import ABC, abstractmethod

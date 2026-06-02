@@ -1,6 +1,7 @@
 """The Healer — orchestrator that takes a broken locator, captures a snapshot,
 asks the LLM for candidates, and tries each one until something matches.
 """
+
 from __future__ import annotations
 
 import logging

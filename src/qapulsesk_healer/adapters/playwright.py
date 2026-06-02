@@ -3,6 +3,7 @@
 Wraps a Playwright Page so the Healer can capture HTML and resolve locators
 using Playwright's native locator API.
 """
+
 from __future__ import annotations
 
 from typing import TYPE_CHECKING
@@ -38,7 +39,7 @@ class PlaywrightAdapter:
         elif strategy == "text":
             locator = self._page.get_by_text(value, exact=True)
         elif strategy == "role":
-            locator = self._page.get_by_role(value)  # type: ignore[arg-type]
+            locator = self._page.get_by_role(value)
         elif strategy == "id":
             locator = self._page.locator(f"#{value}")
         elif strategy == "name":

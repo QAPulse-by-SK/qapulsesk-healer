@@ -1,4 +1,5 @@
 """Tests for the locator strategy enums."""
+
 from __future__ import annotations
 
 import pytest

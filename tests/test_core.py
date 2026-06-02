@@ -1,4 +1,5 @@
 """Tests for the Healer orchestrator (LLM and adapter are mocked)."""
+
 from __future__ import annotations
 
 from typing import Any

@@ -4,6 +4,7 @@ Each strategy maps to the native locator syntax of the underlying framework
 (Selenium / Playwright / Appium). Keeping them as enums lets the LLM emit
 typed responses and lets adapters dispatch cleanly.
 """
+
 from __future__ import annotations
 
 from enum import Enum

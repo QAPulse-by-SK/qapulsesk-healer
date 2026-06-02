@@ -1,4 +1,5 @@
 """Candidate locator and heal-result data structures."""
+
 from __future__ import annotations
 
 from pydantic import BaseModel, Field, field_validator
