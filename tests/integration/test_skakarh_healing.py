@@ -18,6 +18,7 @@ Locally:
 from __future__ import annotations
 
 import os
+import time
 
 import pytest
 
@@ -45,7 +46,11 @@ def _no_llm_key() -> bool:
 
 @pytest.fixture(scope="module")
 def driver():  # type: ignore[no-untyped-def]
-    """One headless Chrome for the whole module — minimise startup cost."""
+    """One headless Chrome for the whole module — minimise startup cost.
+
+    Flags are tuned for reliability in CI: headless Linux runners crash without
+    --disable-gpu, and the default /dev/shm is too small for Chrome IPC.
+    """
     if _no_llm_key():
         pytest.skip(
             "Neither GEMINI_API_KEY nor ANTHROPIC_API_KEY is set; skipping live integration tests."
@@ -55,12 +60,29 @@ def driver():  # type: ignore[no-untyped-def]
     options.add_argument("--headless=new")
     options.add_argument("--no-sandbox")
     options.add_argument("--disable-dev-shm-usage")
+    options.add_argument("--disable-gpu")
+    options.add_argument("--disable-extensions")
+    options.add_argument("--disable-software-rasterizer")
     options.add_argument("--window-size=1440,900")
     drv = webdriver_module.Chrome(options=options)
-    drv.set_page_load_timeout(30)
+    drv.set_page_load_timeout(60)
+
+    # Retry the initial page load — cold Chrome on a fresh Linux runner sometimes
+    # crashes the renderer on the very first navigation. Two retries cover it.
+    last_exc: Exception | None = None
+    for attempt in range(3):
+        try:
+            drv.get(URL)
+            last_exc = None
+            break
+        except Exception as exc:  # chromedriver raises many shapes here
+            last_exc = exc
+            time.sleep(2 * (attempt + 1))
+    if last_exc is not None:
+        drv.quit()
+        raise last_exc
 
     try:
-        drv.get(URL)
         yield drv
     finally:
         drv.quit()
