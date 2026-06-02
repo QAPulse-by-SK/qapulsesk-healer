@@ -91,7 +91,7 @@ class Healer:
         # 1. Try the original locator first — heal is a fallback, not the default path.
         try:
             return self._adapter.find(strategy=by, value=value)
-        except Exception as original_err:  # noqa: BLE001 — adapters raise framework-specific errors
+        except Exception as original_err:  # adapters raise framework-specific errors
             log.info("Original locator failed (%s=%s): %s", by, value, original_err)
 
         # 2. Original failed → capture snapshot and ask the LLM.
@@ -127,7 +127,7 @@ class Healer:
         for idx, candidate in enumerate(result.ranked()):
             try:
                 self._adapter.find(strategy=candidate.strategy, value=candidate.value)
-            except Exception as err:  # noqa: BLE001
+            except Exception as err:
                 log.debug("Candidate %s=%s failed: %s", candidate.strategy, candidate.value, err)
                 continue
             result.chosen_index = idx

@@ -1,0 +1,5 @@
+# Dev dependencies — installs runtime deps plus all framework extras and tooling.
+#
+# Equivalent to: pip install -e ".[all]"
+
+-e .[selenium,playwright,appium,dev]

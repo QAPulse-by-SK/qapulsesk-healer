@@ -1,0 +1,15 @@
+# Runtime dependencies.
+#
+# This file exists for convenience — `pip install -r requirements.txt`. The
+# canonical dependency list lives in `pyproject.toml`. The two are kept in
+# sync; CI installs from pyproject (via `pip install -e ".[dev]"`).
+#
+# For a full dev environment (linters, type-checker, test runner), use:
+#   pip install -e ".[dev]"
+# or:
+#   pip install -r requirements-dev.txt
+
+anthropic>=0.40.0
+beautifulsoup4>=4.12.0
+lxml>=5.0.0
+pydantic>=2.0.0

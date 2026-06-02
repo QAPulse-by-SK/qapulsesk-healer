@@ -30,7 +30,7 @@ class Candidate(BaseModel):
 class HealResult(BaseModel):
     """Result of a heal attempt.
 
-    Attributes: 
+    Attributes:
         original_strategy: The strategy that originally failed.
         original_value: The value that originally failed.
         intent: Human-readable description of what the element does.

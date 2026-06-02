@@ -5,7 +5,7 @@ resolve locators in Selenium's native vocabulary.
 """
 from __future__ import annotations
 
-from typing import TYPE_CHECKING, Any
+from typing import TYPE_CHECKING
 
 from qapulsesk_healer.snapshots.web import WebSnapshot
 
