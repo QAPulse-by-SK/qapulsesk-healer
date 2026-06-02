@@ -121,3 +121,21 @@ files = ["src/qapulsesk_healer"]
 [[tool.mypy.overrides]]
 module = ["selenium.*", "playwright.*", "appium.*"]
 ignore_missing_imports = true
+
+[tool.coverage.run]
+source_pkgs = ["qapulsesk_healer"]
+branch = true
+parallel = false
+disable_warnings = ["module-not-measured"]
+
+[tool.coverage.report]
+show_missing = true
+skip_covered = false
+precision = 1
+exclude_lines = [
+    "pragma: no cover",
+    "raise NotImplementedError",
+    "if TYPE_CHECKING:",
+    "if __name__ == .__main__.:",
+    "\\.\\.\\.",
+]

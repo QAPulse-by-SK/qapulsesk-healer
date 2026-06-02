@@ -154,6 +154,32 @@ A new framework adapter must:
 
 ## Releasing (maintainers only)
 
+## Integration tests
+
+Live integration tests (under `tests/integration/`) run the **full heal loop**: real browser, real Anthropic API call, real website. They are gated two ways so they never run by accident:
+
+1. They carry `@pytest.mark.integration`, so they are excluded by `pytest -m "not integration"` (which is what CI's `make test` does).
+2. They skip themselves if `ANTHROPIC_API_KEY` is not set.
+
+### Running locally
+
+```bash
+export ANTHROPIC_API_KEY="sk-ant-..."
+pytest -m integration -v
+```
+
+### CI
+
+The `.github/workflows/nightly-integration.yml` workflow runs at 03:30 UTC and can be triggered manually from the Actions tab. The `ANTHROPIC_API_KEY` secret must be set on the repo (Settings → Secrets and variables → Actions). If it's missing the workflow logs a warning and exits cleanly — it never fails the build.
+
+### Why nightly, not per-PR
+
+Live tests hit a real LLM and a real website. Running them on every push would burn API credits and create flakiness from external factors (site downtime, model behaviour changes) that have nothing to do with your code. Nightly gives daily confidence without those costs.
+
+---
+
+## Releasing (maintainers only)
+
 1. Cut a `release/v<x.y.z>` branch from `main`.
 2. Bump the version in `src/qapulsesk_healer/__init__.py` and `pyproject.toml`.
 3. Move `[Unreleased]` items in `CHANGELOG.md` under a new `[<x.y.z>] - YYYY-MM-DD` heading.
