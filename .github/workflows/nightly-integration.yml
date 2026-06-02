@@ -1,10 +1,11 @@
 name: Nightly Integration
 
 # Runs the live heal-loop tests against skakarh.com.
-# Heavyweight: starts real Chrome, makes real Anthropic API calls.
+# Heavyweight: starts real Chrome, makes real LLM API calls.
 # - Scheduled nightly at 03:30 UTC.
 # - Also triggerable manually via "Run workflow" on the Actions tab.
 # - Never blocks PR merges (only the lightweight CI in ci.yml gates merges).
+# - Prefers GEMINI_API_KEY (free tier) over ANTHROPIC_API_KEY when both are set.
 
 on:
   schedule:
@@ -29,7 +30,7 @@ jobs:
       - name: Install dependencies
         run: |
           python -m pip install --upgrade pip
-          pip install -e ".[selenium,dev]"
+          pip install -e ".[anthropic,gemini,selenium,dev]"
 
       - name: Set up Chrome
         uses: browser-actions/setup-chrome@v1
@@ -38,11 +39,17 @@ jobs:
 
       - name: Run integration tests
         env:
+          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
           ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
         run: |
-          if [ -z "$ANTHROPIC_API_KEY" ]; then
-            echo "::warning::ANTHROPIC_API_KEY secret not set — skipping integration tests."
+          if [ -z "$GEMINI_API_KEY" ] && [ -z "$ANTHROPIC_API_KEY" ]; then
+            echo "::warning::Neither GEMINI_API_KEY nor ANTHROPIC_API_KEY secret is set. Skipping integration tests."
             exit 0
+          fi
+          if [ -n "$GEMINI_API_KEY" ]; then
+            echo "Using Gemini (free tier) for the heal loop."
+          else
+            echo "Using Anthropic for the heal loop."
           fi
           pytest -m integration -v --tb=short
 

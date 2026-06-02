@@ -28,18 +28,34 @@ Most teams fix this with brittle, repetitive maintenance: re-inspect the element
 
 ## Install
 
+Pick an LLM provider plus a framework adapter. Both are extras:
+
 ```bash
-pip install qapulsesk-healer[selenium]      # for Selenium
-pip install qapulsesk-healer[playwright]    # for Playwright
-pip install qapulsesk-healer[appium]        # for Appium (mobile)
-pip install qapulsesk-healer[all]           # everything + dev tooling
+# Recommended for new users — Gemini's free tier covers typical workloads
+pip install qapulsesk-healer[gemini,selenium]
+
+# Or with Anthropic Claude
+pip install qapulsesk-healer[anthropic,selenium]
+
+# Other frameworks
+pip install qapulsesk-healer[gemini,playwright]
+pip install qapulsesk-healer[gemini,appium]      # mobile (v0.2)
+pip install qapulsesk-healer[all]                # everything + dev tooling
 ```
 
-Set your Anthropic key:
+Set the corresponding API key:
 
 ```bash
+# Free tier: https://aistudio.google.com/apikey
+export GEMINI_API_KEY="..."
+
+# Or paid: https://console.anthropic.com/settings/keys
 export ANTHROPIC_API_KEY="sk-ant-..."
 ```
+
+If **both** are set, the Healer prefers Gemini (free). You can always pass an explicit provider with `Healer(adapter=..., llm=GeminiProvider(...))` to override.
+
+> **Free tier privacy note:** Gemini's free tier logs usage for model improvement. Fine for public sites without sensitive data; use a paid Gemini tier or Anthropic for flows that contain PII.
 
 ## Quickstart
 
@@ -135,11 +151,11 @@ element.click()
 
 | Version | Frameworks | Status |
 |---------|------------|--------|
-| v0.1.0  | Selenium, Playwright (web) | 🚧 In progress |
+| v0.1.0  | Selenium, Playwright (web); Gemini + Anthropic providers | 🚧 In progress |
 | v0.2.0  | + Appium (iOS, Android)   | 📋 Planned |
 | v0.3.0  | + Cypress (via `cy.task` bridge) | 📋 Planned |
 | v0.4.0  | Auto-PR healed locators back to POMs | 💡 Idea |
-| v0.5.0  | Multi-provider LLM (OpenAI, Gemini) | 💡 Idea |
+| v0.5.0  | Multi-provider LLM (OpenAI, Ollama, local models) | 💡 Idea |
 
 ## Related projects
 

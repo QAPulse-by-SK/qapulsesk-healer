@@ -9,7 +9,7 @@ from __future__ import annotations
 import pytest
 
 from qapulsesk_healer.candidates import Candidate
-from qapulsesk_healer.llm import _build_prompt, _parse_candidates
+from qapulsesk_healer.llm.base import _build_prompt, _parse_candidates
 from qapulsesk_healer.snapshots.web import WebSnapshot
 
 

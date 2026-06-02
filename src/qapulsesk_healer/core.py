@@ -8,7 +8,7 @@ import logging
 from typing import TYPE_CHECKING, Any, Protocol
 
 from qapulsesk_healer.candidates import HealResult
-from qapulsesk_healer.llm import AnthropicProvider, LLMProvider
+from qapulsesk_healer.llm import LLMProvider, default_provider
 
 if TYPE_CHECKING:
     from qapulsesk_healer.snapshots.base import Snapshot
@@ -69,7 +69,7 @@ class Healer:
         max_candidates: int = 5,
     ) -> None:
         self._adapter = adapter
-        self._llm: LLMProvider = llm if llm is not None else AnthropicProvider()
+        self._llm: LLMProvider = llm if llm is not None else default_provider()
         self._max_candidates = max_candidates
 
     def find(self, by: str, value: str, intent: str) -> Any:

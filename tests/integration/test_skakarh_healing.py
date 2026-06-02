@@ -39,15 +39,17 @@ URL = "https://www.skakarh.com/"
 pytestmark = pytest.mark.integration
 
 
-def _api_key_missing() -> bool:
-    return not os.environ.get("ANTHROPIC_API_KEY")
+def _no_llm_key() -> bool:
+    return not (os.environ.get("GEMINI_API_KEY") or os.environ.get("ANTHROPIC_API_KEY"))
 
 
 @pytest.fixture(scope="module")
 def driver():  # type: ignore[no-untyped-def]
     """One headless Chrome for the whole module — minimise startup cost."""
-    if _api_key_missing():
-        pytest.skip("ANTHROPIC_API_KEY not set; skipping live integration tests.")
+    if _no_llm_key():
+        pytest.skip(
+            "Neither GEMINI_API_KEY nor ANTHROPIC_API_KEY is set; skipping live integration tests."
+        )
 
     options = Options()
     options.add_argument("--headless=new")

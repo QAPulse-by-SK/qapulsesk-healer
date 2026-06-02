@@ -1,5 +1,4 @@
-# Dev dependencies — installs runtime deps plus all framework extras and tooling.
-#
+# Dev environment: every LLM provider + every framework + tooling.
 # Equivalent to: pip install -e ".[all]"
 
--e .[selenium,playwright,appium,dev]
+-e .[anthropic,gemini,selenium,playwright,appium,dev]
